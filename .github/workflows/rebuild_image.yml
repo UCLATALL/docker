@@ -1,4 +1,4 @@
-name: Build All Images
+name: Rebuild an image
 
 # Controls when the workflow will run
 on:
