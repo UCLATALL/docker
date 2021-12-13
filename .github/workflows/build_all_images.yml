@@ -21,6 +21,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       - uses: dorny/paths-filter@v2
         id: changes
         with:
@@ -37,11 +39,9 @@ jobs:
               - 'dockerfiles/base.Dockerfile'
               - 'scripts/**'
 
-      - uses: actions/checkout@master
-
       - name: Base image
         if: steps.changes.outputs.base == 'true' || github.event.inputs.ignore_file_changes
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@3.04
         with:
           name: uclatall/base
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -53,7 +53,7 @@ jobs:
 
       - name: DeepNote image
         if: steps.changes.outputs.deepnote == 'true' || github.event.inputs.ignore_file_changes
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@3.04
         with:
           name: uclatall/deepnote
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -65,7 +65,7 @@ jobs:
 
       - name: Binder image
         if: steps.changes.outputs.binder == 'true' || github.event.inputs.ignore_file_changes
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@3.04
         with:
           name: uclatall/binder
           username: ${{ secrets.DOCKER_USERNAME }}

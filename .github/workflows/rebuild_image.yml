@@ -22,9 +22,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
+
       - name: Base image
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@3.04
         with:
           name: uclatall/{{ github.event.inputs.image }}
           username: ${{ secrets.DOCKER_USERNAME }}
