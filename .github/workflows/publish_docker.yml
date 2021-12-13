@@ -1,0 +1,76 @@
+name: Build All Images
+
+# Controls when the workflow will run
+on:
+  push:
+    branches: [main]
+
+  # allows triggering the workflow manually
+  workflow_dispatch:
+    inputs:
+      ignore_file_changes:
+        description: Rebuild the images regardless of whether the dependent files have changed
+        type: boolean
+        default: false
+      ignore_cache:
+        description: Do not used cached images when building
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            base:
+              - 'dockerfiles/base.Dockerfile'
+              - 'scripts/**'
+            deepnote:
+              - 'dockerfiles/deepnote.Dockerfile'
+              - 'dockerfiles/base.Dockerfile'
+              - 'scripts/**'
+            binder:
+              - 'dockerfiles/binder.Dockerfile'
+              - 'dockerfiles/base.Dockerfile'
+              - 'scripts/**'
+
+      - uses: actions/checkout@master
+
+      - name: Base image
+        if: steps.changes.outputs.base == 'true' || github.event.inputs.ignore_file_changes
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: uclatall/base
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+          snapshot: true
+          default_branch: main
+          dockerfile: dockerfiles/base.Dockerfile
+          cache: ${{ !github.event.inputs.ignore_cache }}
+
+      - name: DeepNote image
+        if: steps.changes.outputs.deepnote == 'true' || github.event.inputs.ignore_file_changes
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: uclatall/deepnote
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+          snapshot: true
+          default_branch: main
+          dockerfile: dockerfiles/deepnote.Dockerfile
+          cache: ${{ !github.event.inputs.ignore_cache }}
+
+      - name: Binder image
+        if: steps.changes.outputs.binder == 'true' || github.event.inputs.ignore_file_changes
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: uclatall/binder
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+          snapshot: true
+          default_branch: main
+          dockerfile: dockerfiles/binder.Dockerfile
+          cache: ${{ !github.event.inputs.ignore_cache }}
