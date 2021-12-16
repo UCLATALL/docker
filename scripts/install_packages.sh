@@ -13,6 +13,7 @@ install2.r --error --skipinstalled -n $NCPUS \
   car \
   OCSdata \
   remotes \
+  ggpubr \
   repr 
 
 rm -rf /tmp/downloaded_packages
