@@ -1,4 +1,4 @@
-name: Build All Images
+name: Build and Publish the Images
 
 # Controls when the workflow will run
 on:
@@ -18,59 +18,46 @@ on:
         default: false
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
+      # Actions repo: 
       - uses: actions/checkout@v2
 
+      # Actions repo: https://github.com/dorny/paths-filter
       - uses: dorny/paths-filter@v2
         id: changes
         with:
           filters: |
             base:
-              - 'dockerfiles/base.Dockerfile'
+              - 'r-notebook.Dockerfile'
               - 'scripts/**'
             deepnote:
-              - 'dockerfiles/deepnote.Dockerfile'
-              - 'dockerfiles/base.Dockerfile'
-              - 'scripts/**'
-            binder:
-              - 'dockerfiles/binder.Dockerfile'
-              - 'dockerfiles/base.Dockerfile'
+              - 'deepnote.Dockerfile'
+              - 'r-notebook.Dockerfile'
               - 'scripts/**'
 
+      # Actions repo: https://github.com/elgohr/Publish-Docker-Github-Action
       - name: Base image
         if: steps.changes.outputs.base == 'true' || github.event.inputs.ignore_file_changes
         uses: elgohr/Publish-Docker-Github-Action@3.04
         with:
-          name: uclatall/base
+          name: uclatall/r-notebook
+          dockerfile: r-notebook.Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
           snapshot: true
           default_branch: main
-          dockerfile: dockerfiles/base.Dockerfile
           cache: ${{ !github.event.inputs.ignore_cache }}
 
-      - name: DeepNote image
+      - name: Deepnote name
         if: steps.changes.outputs.deepnote == 'true' || github.event.inputs.ignore_file_changes
         uses: elgohr/Publish-Docker-Github-Action@3.04
         with:
           name: uclatall/deepnote
+          dockerfile: deepnote.Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
           snapshot: true
           default_branch: main
-          dockerfile: dockerfiles/deepnote.Dockerfile
-          cache: ${{ !github.event.inputs.ignore_cache }}
-
-      - name: Binder image
-        if: steps.changes.outputs.binder == 'true' || github.event.inputs.ignore_file_changes
-        uses: elgohr/Publish-Docker-Github-Action@3.04
-        with:
-          name: uclatall/binder
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-          snapshot: true
-          default_branch: main
-          dockerfile: dockerfiles/binder.Dockerfile
           cache: ${{ !github.event.inputs.ignore_cache }}

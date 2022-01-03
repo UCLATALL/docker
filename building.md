@@ -5,12 +5,11 @@ The Docker images in this container are build and pushed to DockerHub automatica
 ### Docker commands
 
 ```bash
-# Base image
-docker build -t uclatall/base:latest -f dockerfiles/base.Dockerfile .
+docker build . \
+  -f r-notebook.Dockerfile \
+  -t uclatall/r-notebook:latest
 
-# DeepNote image
-docker build -t uclatall/deepnote:latest -f dockerfiles/deepnote.Dockerfile .
-
-# Binder image
-docker build -t uclatall/binder:latest -f dockerfiles/binder.Dockerfile .
+docker build . \
+  -f deepnote.Dockerfile \
+  -t uclatall/deepnote:latest
 ```
