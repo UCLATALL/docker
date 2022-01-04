@@ -75,7 +75,7 @@ RUN Rscript -e "options(repos = 'https://cran.rstudio.com/', Ncpus = max(1L, par
 # ## - the second stage will only update dependencies that are behind (i.e. it will use the cache where it can)
 # ## - use the specific ref you want to install (use the commit hash or tag), this breaks the Docker cache just for this line
 # ## - this second step is redundant if running with no Docker cache --- the whole point is for the first stage to cache
-ARG COURSEKATA_REF=b677a09f73a27b451060490adbcdbb4e958db452
+ARG COURSEKATA_REF=0.3.0
 RUN Rscript -e "remotes::install_github('UCLATALL/coursekata-r', '${COURSEKATA_REF}', Ncpus = max(1L, parallel::detectCores()), repos = 'https://cran.rstudio.com/', upgrade = FALSE)"
 RUN Rscript -e "options(repos = 'https://cran.rstudio.com/', Ncpus = max(1L, parallel::detectCores())); coursekata::coursekata_install()"
 
