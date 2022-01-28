@@ -16,6 +16,10 @@ on:
         description: Do not used cached images when building
         type: boolean
         default: false
+      coursekata_ref:
+        description: The commit ref to use for UCLATALL/coursekata-r
+        type: string
+        default: 0.3.1
 
 jobs:
   publish:
@@ -41,6 +45,8 @@ jobs:
       - name: Base image
         if: steps.changes.outputs.base == 'true' || github.event.inputs.ignore_file_changes
         uses: elgohr/Publish-Docker-Github-Action@3.04
+        env:
+          COURSEKATA_REF: ${{ github.event.inputs.coursekata_ref }}
         with:
           name: uclatall/r-notebook
           dockerfile: r-notebook.Dockerfile
@@ -49,6 +55,7 @@ jobs:
           snapshot: true
           default_branch: main
           cache: ${{ !github.event.inputs.ignore_cache }}
+          buildargs: COURSEKATA_REF
 
       - name: Deepnote name
         if: steps.changes.outputs.deepnote == 'true' || github.event.inputs.ignore_file_changes
