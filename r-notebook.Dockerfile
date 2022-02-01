@@ -45,6 +45,7 @@ RUN /install_scripts/install_packages.r \
     ### user-requested packages
     car \
     digest \
+    gganimate \
     ggforce \
     ggformula \
     ggpubr \
