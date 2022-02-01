@@ -40,8 +40,13 @@ RUN /install_scripts/install_packages.r \
     ### included here because install_packages does a parallel install
     farver \
     icudt \
+    lme4 \
+    mosaic \
     stringr \
-    vroom \
+    tidyverse \
+    vroom
+
+RUN /install_scripts/install_packages.r \
     ### user-requested packages
     car \
     digest \
@@ -50,19 +55,16 @@ RUN /install_scripts/install_packages.r \
     ggformula \
     ggpubr \
     haven \
-    lme4 \
     mapdata \
     mapproj \
     maps \
-    mosaic \
     OCSdata \
     profvis \
     psych \
     remotes \
     repr \
     simstudy \
-    tidymodels \
-    tidyverse 
+    tidymodels
 
 ## install R packages on CRAN
 RUN Rscript -e "remotes::install_github('datacamp/testwhat', repos = 'https://cran.rstudio.com/', Ncpus = max(1L, parallel::detectCores()))"
