@@ -4,7 +4,7 @@ The Docker images in this container are build and pushed to DockerHub automatica
 
 ### Docker commands
 
-```bash
+```shell
 docker build . \
   -f r-notebook.Dockerfile \
   -t uclatall/r-notebook:latest
