@@ -6,6 +6,7 @@ USER root
 # R pre-requisites
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
+    cargo \
     fonts-dejavu \
     gcc \
     gfortran \
@@ -23,6 +24,7 @@ RUN apt-get update --yes && \
 # R packages available on conda-forge 
 # including IRKernel which gets installed globally.
 RUN mamba install --quiet --yes \
+    'ffmpeg' \
     'gdal' \
     'libgit2' \
     'r-base' \
@@ -49,11 +51,13 @@ RUN chmod +x /install_scripts/install_github.r
 
 # install R packages on CRAN
 RUN /install_scripts/install_cran.r \
+    av \
     car \
     dagitty \
     gganimate \
     ggdag \
     ggformula \
+    gifski \
     mapdata \
     mapproj \
     mosaic \
