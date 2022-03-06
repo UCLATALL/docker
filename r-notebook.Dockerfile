@@ -57,12 +57,14 @@ RUN /install_scripts/install_cran.r \
     gganimate \
     ggdag \
     ggformula \
+    ggpubr \
     gifski \
     mapdata \
     mapproj \
     mosaic \
     OCSdata \
-    simstudy
+    simstudy \
+    tidymodels
 
 ## install R packages on GitHub
 RUN /install_scripts/install_github.r "datacamp/testwhat"
