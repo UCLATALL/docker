@@ -72,16 +72,7 @@ RUN /install_scripts/install_cran.r \
 ## install R packages on GitHub
 RUN /install_scripts/install_github.r "datacamp/testwhat"
 
-## the coursekata-r install is two-stage for a reason: 
-## - the first stage installs all of the dependencies and caches them
-## - don't change the code on the next two lines -- let it be cached
-RUN /install_scripts/install_github.r "UCLATALL/coursekata-r"
-RUN Rscript -e "options(warn = 2, repos = '${CRAN}', Ncpus = max(1L, parallel::detectCores())); coursekata::coursekata_install()"
-## - not all dependencies will update at the same time, and sometimes we will just add functions to the package without dependencies
-## - the second stage will only update dependencies that are behind (i.e. it will use the cache where it can)
-## - use the specific ref you want to install (use the commit hash or tag), this breaks the Docker cache just for this line
-## - this second step is redundant if running with no Docker cache --- the whole point is for the first stage to cache
-ARG COURSEKATA_REF=0.3.1
+ARG COURSEKATA_REF=0.3.3
 RUN /install_scripts/install_github.r -u "UCLATALL/coursekata-r@${COURSEKATA_REF}"
 RUN Rscript -e "options(warn = 2, repos = '${CRAN}', Ncpus = max(1L, parallel::detectCores())); coursekata::coursekata_install()"
 
