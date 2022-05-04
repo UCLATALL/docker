@@ -12,12 +12,22 @@ This image includes most of the set up for the other images. In particular, it s
 
 - [coursekata](https://github.com/UCLATALL/coursekata-r) (includes all course packages)
 - tidyverse
-- tidymodels
-- simstudy
-- psych
-- lme4
 - car
-- OCSdata
+- ClustOfVar
+- cluster
+- dagitty
+- jtools
+- gganimate
+- ggdag
+- ggformula
+- ggpubr
+- lme4
+- mapproj
+- mosaic
+- psych
+- OCSData
+- simstudy
+- tidymodels
 
 ## Deepnote Image
 

@@ -28,6 +28,8 @@ RUN mamba install --quiet --yes \
     'gdal' \
     'libgit2' \
     'r-base' \
+    'r-clustofvar' \
+    'r-cluster' \
     'r-irkernel' \
     'r-lme4' \
     'r-maps' \
@@ -54,6 +56,7 @@ RUN /install_scripts/install_cran.r \
     av \
     car \
     dagitty \
+    jtools \
     gganimate \
     ggdag \
     ggformula \
