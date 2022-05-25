@@ -21,12 +21,16 @@ RUN apt-get update --yes && \
     && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# R packages available on conda-forge 
+# R and Python packages available on conda-forge 
 # including IRKernel which gets installed globally.
 RUN mamba install --quiet --yes \
     'ffmpeg' \
     'gdal' \
     'libgit2' \
+    'numpy' \
+    'pandas' \
+    'plotly' \
+    'statsmodels' \
     'r-base' \
     'r-clustofvar' \
     'r-cluster' \
