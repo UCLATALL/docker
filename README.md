@@ -24,6 +24,7 @@ This image includes most of the set up for the other images. In particular, it s
 - lme4
 - mapproj
 - mosaic
+- plotly
 - psych
 - OCSData
 - simstudy
@@ -48,7 +49,7 @@ The `r-notebook` image will run in BinderHub environments like [MyBinder.org](ht
 3. In the `Dockerfile` paste the following:
 
 ```Dockerfile
-FROM uclatall/binder:latest
+FROM uclatall/r-notebook:latest
 
 # Fix plot sizes
 RUN echo 'options(repr.plot.width = 6, repr.plot.height = 4)' > ~/.Rprofile
