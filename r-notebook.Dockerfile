@@ -38,6 +38,7 @@ RUN mamba install --quiet --yes \
     'r-lme4' \
     'r-maps' \
     'r-minqa' \
+    'r-plotly' \
     'r-profvis' \
     'r-psych' \
     'r-statmod' \
