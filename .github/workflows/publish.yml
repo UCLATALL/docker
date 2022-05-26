@@ -4,8 +4,8 @@ name: Build and Publish the Images
 on:
   push:
     branches: [main]
-
-  # allows triggering the workflow manually
+    paths-ignore:
+      - '**.md'
   workflow_dispatch:
     inputs:
       ignore_file_changes:
@@ -19,7 +19,7 @@ on:
       coursekata_ref:
         description: The commit ref to use for UCLATALL/coursekata-r
         type: string
-        default: 0.3.1
+        default: 0.3.3
 
 jobs:
   publish:
