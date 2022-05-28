@@ -57,7 +57,7 @@ jobs:
           cache: ${{ !github.event.inputs.ignore_cache }}
           buildargs: COURSEKATA_REF
 
-      - name: Deepnote name
+      - name: Deepnote image
         if: steps.changes.outputs.deepnote == 'true' || github.event.inputs.ignore_file_changes
         uses: elgohr/Publish-Docker-Github-Action@3.04
         with:
