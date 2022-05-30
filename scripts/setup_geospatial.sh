@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# the setup_* files are derived from https://github.com/rocker-org/rocker-versioned2
+# they were modified 2020-05-29 to only include the system dependencies and move the
+# R installs out
+
 set -e
 
 # always set this for scripts but don't declare as ENV
