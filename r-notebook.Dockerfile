@@ -2,9 +2,9 @@ ARG BASE_CONTAINER=jupyter/datascience-notebook:python-3.9.13
 FROM ${BASE_CONTAINER}
 
 LABEL org.opencontainers.image.licenses="AGPL-3.0-or-later" \
-      org.opencontainers.image.source="https://github.com/UCLATALL/docker" \
-      org.opencontainers.image.vendor="UCLATALL" \
-      org.opencontainers.image.authors="Adam Blake <adamblake@g.ucla.edu>"
+    org.opencontainers.image.source="https://github.com/UCLATALL/docker" \
+    org.opencontainers.image.vendor="UCLATALL" \
+    org.opencontainers.image.authors="Adam Blake <adamblake@g.ucla.edu>"
 
 # ensure errors get piped
 # https://github.com/hadolint/hadolint/wiki/DL4006
@@ -64,6 +64,7 @@ RUN /install_scripts/install_cran.r \
     ggformula \
     ggpubr \
     gifski \
+    here \
     lme4 \
     mapdata \
     mapproj \
@@ -74,24 +75,20 @@ RUN /install_scripts/install_cran.r \
     plotly \
     profvis \
     psych \
+    RcppTOML \
+    reticulate \
     simstudy \
     statmod \
     tidymodels \
     tidyverse
 
 ### note the -u flag to make sure this package and its dependencies are always updated
-ARG COURSEKATA_REF=0.3.3
+ARG COURSEKATA_REF=0.4.0
 RUN /install_scripts/install_github.r -u "UCLATALL/coursekata-r@${COURSEKATA_REF}"
 RUN Rscript -e "options(warn = 2, Ncpus = max(1L, parallel::detectCores())); coursekata::coursekata_install()"
 
 ### needed to run test code in the book as Solution Correctness Tests
 RUN /install_scripts/install_github.r "datacamp/testwhat"
-
-## run python from R
-RUN /install_scripts/install_cran.r \
-    RcppTOML \
-    here \
-    reticulate
 
 # add default kernel and interface for Deepnote and Jupyter
 ENV DEFAULT_KERNEL_NAME=ir
