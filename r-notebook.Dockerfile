@@ -83,7 +83,7 @@ RUN /install_scripts/install_cran.r \
     tidyverse
 
 ### note the -u flag to make sure this package and its dependencies are always updated
-ARG COURSEKATA_REF=0.5.0
+ARG COURSEKATA_REF=0.5.1
 RUN /install_scripts/install_github.r -u "UCLATALL/coursekata-r@${COURSEKATA_REF}"
 RUN Rscript -e "options(warn = 2, Ncpus = max(1L, parallel::detectCores())); coursekata::coursekata_install()"
 
